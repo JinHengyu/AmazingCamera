@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>摄像头拍照</title>
+    <title>相机--自然</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<video id="video" width="480" height="320" controls>
-</video>
-<div>
-    <button id="capture">拍照</button>
-</div>
-<canvas id="canvas" width="480" height="320"></canvas>
-<script src="main.js"></script>
+    <video id="video" >
+    </video>
+    <div id="buttonList">
+        <button id="toggleCapture">拍照</button>
+        <button id="toggleMirror">镜像</button>
+        <button id="toggleDev">控制台</button>
+        <button id="toggleWindow">全屏</button>
+        <button id="exit">退出</button>
+    </div>
+
+    <a download="selfie.png" style="display: none" id="download"></a>
+    <canvas id="canvas" width="2000" height="2000"></canvas>
+    <script src="control.js"></script>
 </body>
+
 </html>

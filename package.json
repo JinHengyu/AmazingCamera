@@ -1,0 +1,22 @@
+{
+  "name": "MirrorCamera",
+  "version": "1.0.3",
+  "description": "smart camera app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JinHengyu/camera.git"
+  },
+  "author": "JimJin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JinHengyu/camera/issues"
+  },
+  "homepage": "https://github.com/JinHengyu/camera#readme",
+  "devDependencies": {
+    "electron": "latest"
+  }
+}
