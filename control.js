@@ -103,13 +103,9 @@ toggleCapture.addEventListener('click', (e) => {
         if (confirm('是否保存?')) { //同步的
             shot_wav.play();    //播放卡擦声
             canvas.getContext("2d").drawImage(video, 0, 0); //应该是同步吧,因为不考虑显示..
-            console.log('1');
             download.download = new Date().toString().substr(0, 24);    //文件名
-            console.log('2');
             download.href = canvas.toDataURL("image/png");
-            console.log('3');
             download.click();
-            console.log('4');
         }
     }
 })
