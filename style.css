@@ -58,3 +58,9 @@ video {
 canvas {
     display: none;
 }
+
+/* 被光标选中的文本.... */
+
+::selection {
+    background-color: transparent;
+}

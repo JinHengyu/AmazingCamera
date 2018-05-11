@@ -30,19 +30,20 @@ function getUserMedia(constraints, success, error) {
     }
 }
 
-
+//当用户同意打开摄像头后   
+//当然,在electron中因为node的权限足够大到不需要经过用户同意....
 function success(stream) {
     //兼容webkit核心浏览器
-    const CompatibleURL = window.URL || window.webkitURL;
+    // const CompatibleURL = window.URL || window.webkitURL;
     //将视频流设置为video元素的源
-    console.log(stream);
-
+    // console.log(stream);
+    
     //video.src = CompatibleURL.createObjectURL(stream);
     video.srcObject = stream;
-    video.play().then(  //返回promise
-        () => {
-            vw = video.videoWidth;
-            vh = video.videoHeight;
+    video.play().then(  //返回promise !!!!
+        () => {            //画布设置为为摄像头的分辨率!!!!!
+            canvas.width = vw = video.videoWidth;
+            canvas.height = vh = video.videoHeight;
             document.title = `${vw} * ${vh} --- 自然`;
         }
     );
@@ -62,7 +63,7 @@ if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.w
 }
 
 // capture.addEventListener('click', function () {
-//这个也行..
+    //这个也行..
 // context.drawImage(video, 0, 0, 480, 320);
 // });
 
@@ -99,15 +100,16 @@ toggleCapture.addEventListener('click', (e) => {
     else {
         e.target.innerHTML = '重拍';
         video.pause();
-        if (confirm('是否保存?')) {
+        if (confirm('是否保存?')) { //同步的
             shot_wav.play();    //播放卡擦声
-            //画布重置为摄像头的分辨率!!!!!
-            canvas.width = vw;
-            canvas.height = vh;
             canvas.getContext("2d").drawImage(video, 0, 0); //应该是同步吧,因为不考虑显示..
+            console.log('1');
             download.download = new Date().toString().substr(0, 24);    //文件名
+            console.log('2');
             download.href = canvas.toDataURL("image/png");
+            console.log('3');
             download.click();
+            console.log('4');
         }
     }
 })
