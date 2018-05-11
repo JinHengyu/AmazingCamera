@@ -1,4 +1,7 @@
-// electron-packager . --icon=icon.icns
+
+/* 生成app:
+ * npm run package */
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 app.on('ready', () => {
     let win = new BrowserWindow({ width: 800, height: 700 });
@@ -9,6 +12,7 @@ app.on('ready', () => {
     ipcMain.on('toggleDev', win.toggleDevTools.bind(win));
     ipcMain.on('exit', app.quit.bind(app));
     ipcMain.on('toggleWindow', () => {
+        //注意窗口最大化和全屏的区别
         if (win.isFullScreen())
             // win.setBounds({ x, y, width: 1000, height: 600 });
             win.setFullScreen(false);

@@ -1,15 +1,16 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-body{
+body {
     text-align: center;
     background: black;
 }
 
 /*镜像*/
-.mirror{
+
+.mirror {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     -ms-transform: rotateY(180deg);
@@ -17,16 +18,15 @@ body{
     transform: rotateY(180deg);
 }
 
-video{
+video {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-
 }
 
-#buttonList{
+#buttonList {
     position: fixed;
     z-index: 2;
     background: transparent;
@@ -35,11 +35,11 @@ video{
     bottom: 0;
     flex-direction: row;
     /* 这因该是以上方向上的对齐方式 */
-    justify-content: center;  
+    justify-content: center;
     /* space-evenly */
 }
 
-#buttonList button{
+#buttonList button {
     font-size: 16px;
     width: 130px;
     height: 70px;
@@ -47,17 +47,14 @@ video{
     background: rgba(0, 0, 0, 0.5);
     /* border-radius: 4px; */
     /* 取消按钮的默认样式 */
-    border-width:0;
+    border-width: 0;
 }
 
-#buttonList button:hover{
+#buttonList button:hover {
     color: black;
     background: rgba(255, 255, 255, 0.5);
 }
 
-canvas{
+canvas {
     display: none;
-    position: fixed;
-    width: 120%;
-    height: 120%;
 }

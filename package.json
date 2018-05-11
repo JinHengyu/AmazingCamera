@@ -1,10 +1,11 @@
 {
   "name": "MirrorCamera",
-  "version": "1.0.3",
-  "description": "smart camera app",
+  "version": "1.1.4",
+  "description": "a smart camera app witch can toggle mirror",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=output"
   },
   "repository": {
     "type": "git",

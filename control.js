@@ -1,16 +1,17 @@
 
 const { ipcRenderer } = require('electron');
 
-let video = document.getElementById('video');
-let toggleMirror = document.querySelector('#toggleMirror');
-let toggleCapture = document.querySelector('#toggleCapture');
-let toggleDev = document.querySelector('#toggleDev');
-let exit = document.querySelector('#exit');
-let toggleWindow = document.querySelector('#toggleWindow');
-let download = document.querySelector('#download');
-let canvas = document.querySelector('#canvas');
-let shot_wav = document.querySelector('#shot_wav');
+const toggleMirror = document.querySelector('#toggleMirror');
+const toggleCapture = document.querySelector('#toggleCapture');
+const toggleDev = document.querySelector('#toggleDev');
+const toggleWindow = document.querySelector('#toggleWindow');
+const exit = document.querySelector('#exit');
+const video = document.querySelector('#video');
+const download = document.querySelector('#download');
+const canvas = document.querySelector('#canvas');
+const shot_wav = document.querySelector('#shot_wav');
 
+let vw, vh; //视频分辨率,取决于摄像头
 //访问用户媒体设备的兼容方法
 function getUserMedia(constraints, success, error) {
     if (navigator.mediaDevices.getUserMedia) {
@@ -32,15 +33,20 @@ function getUserMedia(constraints, success, error) {
 
 function success(stream) {
     //兼容webkit核心浏览器
-    let CompatibleURL = window.URL || window.webkitURL;
+    const CompatibleURL = window.URL || window.webkitURL;
     //将视频流设置为video元素的源
     console.log(stream);
 
     //video.src = CompatibleURL.createObjectURL(stream);
     video.srcObject = stream;
-    video.play();   //返回promise
-    // video.pause();
-
+    video.play().then(  //返回promise
+        () => {
+            vw = video.videoWidth;
+            vh = video.videoHeight;
+            document.title = `${vw} * ${vh} --- 自然`;
+        }
+    );
+    // var Promise = HTMLMediaElement.play();
 }
 
 function error(error) {
@@ -62,11 +68,11 @@ if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.w
 
 toggleMirror.addEventListener('click', function () {
     if (video.classList.contains('mirror')) {
-        document.title = '相机--自然';
+        document.title = `${vw} * ${vh} --- 自然`;
         video.classList.remove('mirror');
     }
     else {
-        document.title = '相机--镜像';
+        document.title = `${vw} * ${vh} --- 镜像`;
         video.classList.add('mirror');
     }
 });
@@ -81,7 +87,6 @@ exit.addEventListener('click', () => {
 });
 
 toggleWindow.addEventListener('click', () => {
-    // if(toggleWindow.value==='max')
     ipcRenderer.send('toggleWindow');
 })
 
@@ -95,12 +100,12 @@ toggleCapture.addEventListener('click', (e) => {
         e.target.innerHTML = '重拍';
         video.pause();
         if (confirm('是否保存?')) {
-            shot_wav.play();
+            shot_wav.play();    //播放卡擦声
             //画布重置为摄像头的分辨率!!!!!
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            canvas.width = vw;
+            canvas.height = vh;
             canvas.getContext("2d").drawImage(video, 0, 0); //应该是同步吧,因为不考虑显示..
-            download.download = new Date().toString().substr(0, 24);
+            download.download = new Date().toString().substr(0, 24);    //文件名
             download.href = canvas.toDataURL("image/png");
             download.click();
         }
