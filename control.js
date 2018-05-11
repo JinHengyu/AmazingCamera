@@ -9,6 +9,7 @@ let exit = document.querySelector('#exit');
 let toggleWindow = document.querySelector('#toggleWindow');
 let download = document.querySelector('#download');
 let canvas = document.querySelector('#canvas');
+let shot_wav = document.querySelector('#shot_wav');
 
 //访问用户媒体设备的兼容方法
 function getUserMedia(constraints, success, error) {
@@ -94,6 +95,7 @@ toggleCapture.addEventListener('click', (e) => {
         e.target.innerHTML = '重拍';
         video.pause();
         if (confirm('是否保存?')) {
+            shot_wav.play();
             //画布重置为摄像头的分辨率!!!!!
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
