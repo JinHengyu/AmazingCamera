@@ -1,5 +1,7 @@
 /* 生成app:
- * npm run package */
+ * npm run package 
+ * 安装依赖:
+ * cnpm install */
 
 const {
     app,

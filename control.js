@@ -10,28 +10,13 @@ const toggleDev = document.querySelector('#toggleDev');
 const toggleWindow = document.querySelector('#toggleWindow');
 const exit = document.querySelector('#exit');
 const video = document.querySelector('#video');
-const download = document.querySelector('#download');
+// const download = document.querySelector('#download');
 const canvas = document.querySelector('#canvas');
 const shot_wav = document.querySelector('#shot_wav');
 
 let vw, vh; //视频分辨率,取决于摄像头
 //访问用户媒体设备的兼容方法
-function getUserMedia(constraints, success, error) {
-    if (navigator.mediaDevices.getUserMedia) {
-        //最新的标准API  //promise对象
-        //返回的promise对象可能既不会resolve也不会reject，因为用户不是必须选择允许或拒绝。
-        navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
-    } else if (navigator.webkitGetUserMedia) {
-        //webkit核心浏览器
-        navigator.webkitGetUserMedia(constraints, success, error)
-    } else if (navigator.mozGetUserMedia) {
-        //firfox浏览器
-        navigator.mozGetUserMedia(constraints, success, error);
-    } else if (navigator.getUserMedia) {
-        //旧版API
-        navigator.getUserMedia(constraints, success, error);
-    }
-}
+
 
 //当用户同意打开摄像头后   
 //当然,在electron中因为node的权限足够大到不需要经过用户同意....
@@ -57,22 +42,31 @@ function error(error) {
     console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
 }
 
-if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
-    //调用用户媒体设备, 访问摄像头
-    //醉了,摄像头是720p的,还没我屏幕分辨率高...
-    getUserMedia({
-        video: {
-            width: {
-                min: 1280
-            },
-            height: {
-                min: 720
-            }
+//调用用户媒体设备, 访问摄像头
+//醉了,摄像头是720p的,还没我屏幕分辨率高...
+(function getCamera(constraints, success, error) {
+    let get = undefined;
+    if (get = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)) {
+        //最新的标准API  //promise对象
+        //返回的promise对象可能既不会resolve也不会reject，因为用户不是必须选择允许或拒绝。
+        get(constraints).then(success).catch(error);
+    } else if (get = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.getUserMedia) {
+        //webkit核心浏览器  //firfox浏览器  //旧版API
+        get(constraints, success, error)
+    } else {
+        alert('不支持访问用户媒体,程序即将退出');
+        ipcRenderer.send('exit');
+    }
+})({
+    video: {
+        width: {
+            min: 1280
+        },
+        height: {
+            min: 720
         }
-    }, success, error);
-} else {
-    alert('不支持访问用户媒体');
-}
+    }
+}, success, error);
 
 // capture.addEventListener('click', function () {
 //这个也行..
@@ -114,8 +108,8 @@ toggleCapture.addEventListener('click', (e) => {
         let base64 = canvas.toDataURL("image/png").replace(/^data:image\/\w+;base64,/, "");
         let dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
         // replace第一个参数如果是字符串对象只会替换第一个匹配...全局匹配得用正则//g
-        // 目录拼接到与.app同级的目录
-        let fileName = `${__dirname}/../../${new Date().toString().substr(0, 24)}.png`.replace(/ /g, '-');
+        // 目录拼接到与.app目录同级的目录
+        let fileName = `${__dirname}/../../../../ugly_selfie_${new Date().toString().substr(0, 24)}.png`.replace(/ /g, '-');
 
         //writeFileSync
         fs.writeFile(fileName, dataBuffer, err => {
