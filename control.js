@@ -1,5 +1,8 @@
-
-const { ipcRenderer } = require('electron');
+const {
+    ipcRenderer
+} = require('electron');
+const fs = require('fs')
+const child = require('child_process')
 
 const toggleMirror = document.querySelector('#toggleMirror');
 const toggleCapture = document.querySelector('#toggleCapture');
@@ -37,11 +40,11 @@ function success(stream) {
     // const CompatibleURL = window.URL || window.webkitURL;
     //将视频流设置为video元素的源
     // console.log(stream);
-    
+
     //video.src = CompatibleURL.createObjectURL(stream);
     video.srcObject = stream;
-    video.play().then(  //返回promise !!!!
-        () => {            //画布设置为为摄像头的分辨率!!!!!
+    video.play().then( //返回promise !!!!
+        () => { //画布设置为为摄像头的分辨率!!!!!
             canvas.width = vw = video.videoWidth;
             canvas.height = vh = video.videoHeight;
             document.title = `${vw} * ${vh} --- 自然`;
@@ -57,13 +60,22 @@ function error(error) {
 if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
     //调用用户媒体设备, 访问摄像头
     //醉了,摄像头是720p的,还没我屏幕分辨率高...
-    getUserMedia({ video: { width: { min: 1280 }, height: { min: 720 } } }, success, error);
+    getUserMedia({
+        video: {
+            width: {
+                min: 1280
+            },
+            height: {
+                min: 720
+            }
+        }
+    }, success, error);
 } else {
     alert('不支持访问用户媒体');
 }
 
 // capture.addEventListener('click', function () {
-    //这个也行..
+//这个也行..
 // context.drawImage(video, 0, 0, 480, 320);
 // });
 
@@ -71,8 +83,7 @@ toggleMirror.addEventListener('click', function () {
     if (video.classList.contains('mirror')) {
         document.title = `${vw} * ${vh} --- 自然`;
         video.classList.remove('mirror');
-    }
-    else {
+    } else {
         document.title = `${vw} * ${vh} --- 镜像`;
         video.classList.add('mirror');
     }
@@ -93,19 +104,34 @@ toggleWindow.addEventListener('click', () => {
 
 
 toggleCapture.addEventListener('click', (e) => {
-    if (video.paused) {
-        e.target.innerHTML = '拍照';
-        video.play();
-    }
-    else {
-        e.target.innerHTML = '重拍';
-        video.pause();
-        if (confirm('是否保存?')) { //同步的
-            shot_wav.play();    //播放卡擦声
-            canvas.getContext("2d").drawImage(video, 0, 0); //应该是同步吧,因为不考虑显示..
-            download.download = new Date().toString().substr(0, 24);    //文件名
-            download.href = canvas.toDataURL("image/png");
-            download.click();
-        }
+    // alert同步阻塞线程,起到暂停的作用 
+    if (confirm('是否保存?')) { //同步的
+        shot_wav.play(); //播放卡擦声
+        canvas.getContext("2d").drawImage(video, 0, 0); //应该是同步吧,因为不考虑显示..
+        // download.download = new Date().toString().substr(0, 24); //文件名
+        // download.href = canvas.toDataURL("image/png");
+        // 去掉前面的`data:image/png;base64,`
+        let base64 = canvas.toDataURL("image/png").replace(/^data:image\/\w+;base64,/, "");
+        let dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
+        // replace第一个参数如果是字符串对象只会替换第一个匹配...全局匹配得用正则//g
+        // 目录拼接到与.app同级的目录
+        let fileName = `${__dirname}/../../${new Date().toString().substr(0, 24)}.png`.replace(/ /g, '-');
+
+        //writeFileSync
+        fs.writeFile(fileName, dataBuffer, err => {
+            if (err) console.log(err);
+            else {
+                console.log(`图片写入成功:\n${fileName}`);
+                child.exec(`open ${fileName}`)
+            }
+        })
+        // 这一步发生了crush...待解决...
+        // 貌似通过<a>标签下载本地大图片会导致href属性过大而崩溃......
+        // download.click();
     }
 })
+
+// electron囊括了浏览器和nodejs的核心库:
+// 既包含DOM也有深入OS的模块
+console.log('__dirname: ' + __dirname);
+console.log('See ur Pathetic true Face !')

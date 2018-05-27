@@ -1,11 +1,19 @@
-
 /* 生成app:
  * npm run package */
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const {
+    app,
+    BrowserWindow,
+    ipcMain
+} = require('electron');
+
 app.on('ready', () => {
-    let win = new BrowserWindow({ width: 800, height: 700 });
-    win.loadURL(`file://${__dirname}/camera.html`);     //只能使用绝对路径(σ｀д′)σ
+    let win = new BrowserWindow({
+        width: 800,
+        height: 700,
+        webPreferences:{webSecurity: false} //toDataURL有跨域限制
+    });
+    win.loadURL(`file://${__dirname}/camera.html`); //只能使用绝对路径(σ｀д′)σ
 
     // console.log(this);  //返回{}.....
     //默认是全局对象调用这个函数,所以要绑定....
@@ -21,3 +29,5 @@ app.on('ready', () => {
 })
 
 app.on('window-all-closed', app.quit.bind(app));
+
+// console.log(__dirname);
