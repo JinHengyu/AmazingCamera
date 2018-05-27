@@ -50,7 +50,7 @@ function error(error) {
         //最新的标准API  //promise对象
         //返回的promise对象可能既不会resolve也不会reject，因为用户不是必须选择允许或拒绝。
         get(constraints).then(success).catch(error);
-    } else if (get = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.getUserMedia) {
+    } else if (get = (navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.getUserMedia).bind(navigator)) {
         //webkit核心浏览器  //firfox浏览器  //旧版API
         get(constraints, success, error)
     } else {
