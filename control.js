@@ -46,6 +46,7 @@ function error(error) {
 //醉了,摄像头是720p的,还没我屏幕分辨率高...
 (function getCamera(constraints, success, error) {
     let get = undefined;
+    // 影响方法的运行结果有两个因素:参数和对象
     if (get = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)) {
         //最新的标准API  //promise对象
         //返回的promise对象可能既不会resolve也不会reject，因为用户不是必须选择允许或拒绝。
