@@ -1,5 +1,6 @@
 {
-  "name": "MirrorCamera",
+  "name": "mirrorcamera",
+  "productName": "MirrorCamera",
   "version": "2.3.4",
   "description": "a smart camera app witch can toggle mirror",
   "main": "main.js",

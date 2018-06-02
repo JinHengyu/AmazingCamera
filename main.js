@@ -15,11 +15,11 @@ app.on('ready', () => {
         height: 700,
         webPreferences:{webSecurity: false} //toDataURL有跨域限制
     });
-    win.loadURL(`file://${__dirname}/camera.html`); //只能使用绝对路径(σ｀д′)σ
+    win.loadURL(`file://${__dirname}/renderer/camera.html`); //只能使用绝对路径(σ｀д′)σ
 
     // console.log(this);  //返回{}.....
     //默认是全局对象调用这个函数,所以要绑定....
-    ipcMain.on('toggleDev', win.toggleDevTools.bind(win));
+    // ipcMain.on('toggleDev', win.toggleDevTools.bind(win));
     ipcMain.on('exit', app.quit.bind(app));
     ipcMain.on('toggleWindow', () => {
         //注意窗口最大化和全屏的区别

@@ -65,3 +65,20 @@ canvas {
 ::selection {
     background-color: transparent;
 }
+
+
+aside{
+    position: fixed;
+    height: 100%;
+    top: 0;
+    right: -30%;
+    width: 30%;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.5)
+}
+
+aside input{
+    display: block;
+    width: 100%;
+    margin: 15px;
+}

@@ -1,3 +1,6 @@
+/*jshint esversion: 6 */
+
+
 const {
     ipcRenderer
 } = require('electron');
@@ -6,7 +9,9 @@ const child = require('child_process')
 
 const toggleMirror = document.querySelector('#toggleMirror');
 const toggleCapture = document.querySelector('#toggleCapture');
-const toggleDev = document.querySelector('#toggleDev');
+// const toggleDev = document.querySelector('#toggleDev');
+const filter = document.querySelector('#filter');
+const aside = document.querySelector('aside')
 const toggleWindow = document.querySelector('#toggleWindow');
 const exit = document.querySelector('#exit');
 const video = document.querySelector('#video');
@@ -84,10 +89,6 @@ toggleMirror.addEventListener('click', function () {
     }
 });
 
-
-toggleDev.addEventListener('click', () => {
-    ipcRenderer.send('toggleDev')
-});
 
 exit.addEventListener('click', () => {
     ipcRenderer.send('exit')

@@ -10,12 +10,21 @@
 </head>
 
 <body>
+
+
+    <aside>
+        <input type="range">
+        <input type="range">
+        <input type="range">
+        <input type="range">
+    </aside>
+    
     <video id="video">
     </video>
     <div id="buttonList">
         <button id="toggleCapture">拍照</button>
         <button id="toggleMirror">镜像</button>
-        <button id="toggleDev">控制台</button>
+        <button id="filter">滤镜</button>
         <button id="toggleWindow">全屏</button>
         <button id="exit">退出</button>
     </div>
@@ -25,6 +34,7 @@
     <canvas id="canvas" width="2000" height="2000"></canvas>
 
     <script src="control.js"></script>
+    <script src="filter.js"></script>
 </body>
 
 </html>
