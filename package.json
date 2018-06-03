@@ -1,23 +1,23 @@
 {
-  "name": "mirrorcamera",
-  "productName": "MirrorCamera",
-  "version": "2.4.6",
+  "name": "amazingcamera",
+  "productName": "AmazingCamera",
+  "version": "3.4.5",
   "description": "an amazing camera app witch can toggle mirror and choose ur favourite filters ！",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon.icns --prune=true --out=output"
+    "package": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icon2.icns --prune=true --out=output"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JinHengyu/MirrorCamera.git"
+    "url": "git+https://github.com/JinHengyu/AmazingCamera.git"
   },
   "author": "JimJin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JinHengyu/MirrorCamera/issues"
+    "url": "https://github.com/JinHengyu/AmazingCamera/issues"
   },
-  "homepage": "https://github.com/JinHengyu/MirrorCamera#readme",
+  "homepage": "https://github.com/JinHengyu/AmazingCamera#readme",
   "devDependencies": {
     "electron": "latest"
   }
