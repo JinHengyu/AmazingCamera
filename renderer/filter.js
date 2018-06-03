@@ -1,13 +1,22 @@
-global['blur'] = 0
-global['brightness'] = 100
+(function init_filter() {
+    global['blur'] = 0
+    global['brightness'] = 100
+    global['contrast'] = 100
+    global['grayscale'] = 0
+    global['hue'] = 0
+    global['invert'] = 0
+    global['opacity'] = 100
+    global['saturate'] = 150
+    global['sepia'] = 0
+})();
 
+// 两个连续的立即函数之间必须加分号！！！
 
-
-global.updateFilter = () => {
-    const filter_expression = `blur(${blur}px) brightness(${brightness}%)`
-    video.style.filter = filter_expression
-
-}
+(global.updateFilter = (name, value) => {
+    if (name && value) global[name] = value;
+    const filter_expression = `blur(${blur}px) brightness(${brightness}%) contrast(${contrast}%) grayscale(${grayscale}%) hue-rotate(${hue}deg) invert(${invert}%) opacity(${opacity}%) saturate(${saturate}%) sepia(${sepia}%)`;
+    video.style.filter = filter_expression;
+})(undefined, undefined);
 
 function toggleFilter() {
     if (filter.isShow) {

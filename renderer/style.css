@@ -29,7 +29,7 @@ video {
 
 #buttonList {
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     background: transparent;
     display: flex;
     width: 100%;
@@ -74,11 +74,17 @@ aside{
     right: -30%;
     width: 30%;
     z-index: 2;
-    background: rgba(255, 255, 255, 0.5)
+    background: rgba(255, 255, 255, 0.5);
+    padding: 15px 0;
+    font-family: serif;
 }
 
 aside input{
+    /* display: block; */
+    width: 85%;
+    margin: 15px 20px;
+}
+
+aside span{
     display: block;
-    width: 90%;
-    margin: 15px;
 }

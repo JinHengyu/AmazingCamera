@@ -13,10 +13,24 @@
 
 
     <aside>
-        <input type="range" min="0" max="5" value="0" onchange="global['blur']=this.value;updateFilter()">
-        <input type="range">
-        <input type="range">
-        <input type="range">
+        <span>blur</span>
+        <input type="range" min="0" max="10" value="0" onchange="updateFilter(`blur`,this.value)">
+        <span>brightness</span>
+        <input type="range" min="0" max="200" value="100" onchange="updateFilter(`brightness`,this.value)">
+        <span>contrast</span>
+        <input type="range" min="0" max="200" value="100" onchange="updateFilter(`contrast`,this.value)">
+        <span>grayscale</span>
+        <input type="range" min="0" max="100" value="0" onchange="updateFilter(`grayscale`,this.value)">
+        <span>hue-rotate</span>
+        <input type="range" min="0" max="360" value="0" onchange="updateFilter(`hue`,this.value)">
+        <span>invert</span>
+        <input type="range" min="0" max="100" value="0" onchange="updateFilter(`invert`,this.value)">
+        <span>opacity</span>
+        <input type="range" min="0" max="100" value="100" onchange="updateFilter(`opacity`,this.value)">
+        <span>saturate</span>
+        <input type="range" min="0" max="300" value="150" onchange="updateFilter(`saturate`,this.value)">
+        <span>sepia</span>
+        <input type="range" min="0" max="100" value="0" onchange="updateFilter(`sepia`,this.value)">
     </aside>
 
     <video id="video">
