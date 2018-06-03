@@ -13,12 +13,12 @@
 
 
     <aside>
-        <input type="range">
+        <input type="range" min="0" max="5" value="0" onchange="global['blur']=this.value;updateFilter()">
         <input type="range">
         <input type="range">
         <input type="range">
     </aside>
-    
+
     <video id="video">
     </video>
     <div id="buttonList">
